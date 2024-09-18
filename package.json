@@ -1,0 +1,22 @@
+{
+  "name": "koishi-plugin-bilibili-video-details",
+  "description": "An easy plugin for showing the detail of avid or bvid or address",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "devDependencies": {},
+  "peerDependencies": {
+    "koishi": "^4.18.0"
+  }
+}

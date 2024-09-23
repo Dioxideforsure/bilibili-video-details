@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import {Time} from 'koishi'
+import {Logger, Time} from 'koishi'
 
 /* 
     address of api
@@ -44,7 +44,9 @@ export interface video_access {
 */
 
 export class bili_helper {
-  constructor(private index: string) {}
+  constructor(private index: string) {
+    
+  }
 
   /**
    * api
@@ -67,7 +69,7 @@ export class bili_helper {
         return this.vidNoCheck(bvid);
       }
     } catch (error) {
-      console.log(`Not a valid address, verify whether bvid`);
+      new Logger('bili_helper').info("Not a valid address, verify whether bvid", Logger.SILENT);
       return this.vidNoCheck(urlIf);
     }
     return this.vidNoCheck(urlIf);
@@ -85,9 +87,10 @@ export class bili_helper {
       }
       const data: JSON = await response.json();
       let newData = JSON.parse(JSON.stringify(data, this.replacer, 2))
+      new Logger('bili_helper').success("Fetch data success")
       return Promise.resolve(newData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      new new Logger('bili_helper').error("Error fetching data:" + error);
       return Promise.reject(error);
     }
   }
@@ -136,9 +139,10 @@ export class bili_helper {
       let api_av: string = api.concat("aid=").concat(num);
       return api_av;
     } else {
-      console.error("You should put avid and bvid")
+      new Logger('bili_helper').error("You should put avid and bvid")
     }
   }
+
 }
 
 /* basic function of getting json from api, filter and video number check */

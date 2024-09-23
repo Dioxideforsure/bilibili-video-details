@@ -13,7 +13,7 @@ export function apply(ctx: Context) {
     video.api().then((video_api) => {
       if (video_api !== undefined && video_api.code === 0) {
         session.send(
-          toString(video_api) + h("img", { src: video_api.data.pic })
+          toString(video_api) + h.image(video_api.data.pic)
         );
       }
     });

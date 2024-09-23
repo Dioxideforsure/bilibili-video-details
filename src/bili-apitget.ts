@@ -64,12 +64,11 @@ export class bili_helper {
         url.hostname === "bilibili.com"
       ) {
         let bvid = url.pathname;
-        bvid = bvid.substring(7, bvid.length)
-        // console.log(bvid)
+        bvid = bvid.match(/\/video\/(\w+)(?:\/)?$/)[1]
         return this.vidNoCheck(bvid);
       }
     } catch (error) {
-      new Logger('bili_helper').info("Not a valid address, verify whether bvid", Logger.SILENT);
+      new Logger('bili_helper').info("Not a valid address, verify whether bvid");
       return this.vidNoCheck(urlIf);
     }
     return this.vidNoCheck(urlIf);

@@ -8,6 +8,13 @@
     "lib",
     "dist"
   ],
+  "contributors": [
+    "Dioxide"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dioxideforsure/bilibili-video-details.git"
+  },
   "license": "MIT",
   "scripts": {},
   "keywords": [

@@ -1,4 +1,4 @@
-import { Context, h, Schema, Time } from 'koishi'
+import { Context, h, Schema } from 'koishi'
 import { video_access, bili_helper, dateAndTime } from './bili-apitget'
 
 export const name = 'bilibili-video-details'
@@ -23,7 +23,6 @@ export function apply(ctx: Context) {
 
 
 function toString(video: video_access): string {
-  
   let detail = `
 标题: ${video.data.title}
 作者: ${video.data.name}

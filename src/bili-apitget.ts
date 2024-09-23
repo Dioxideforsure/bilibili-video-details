@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import {Time} from 'koishi'
 
 /* 
     address of api
@@ -23,12 +24,12 @@ export interface video_access {
     tname: string;
     pic: string;
     title: string;
-    time: number;
+    pubdate: number;
     duration: number;
     desc: string;
     name: string;
-    viewer: number;
-    danmuku: number;
+    view: number;
+    danmaku: number;
     reply: number;
     like: number;
     coin: number;
@@ -48,12 +49,9 @@ export class bili_helper {
   /**
    * api
    */
-  public api() {
-    let bili_filled: video_access = undefined;
-    this.fetchData(bili_helper.verifyURL(this.index)).then((x) => {
-      bili_filled = x as unknown as video_access;
-    });
-    return bili_filled;
+  public async api(): Promise<video_access> {
+    let bili_filled: video_access = await this.fetchData(bili_helper.verifyURL(this.index)) as unknown as video_access
+    return bili_filled
   }
 
   public static verifyURL(urlIf: string): string {
@@ -64,7 +62,9 @@ export class bili_helper {
         url.hostname === "bilibili.com"
       ) {
         let bvid = url.pathname;
-        return this.vidNoCheck(bvid.substring(7, bvid.length - 1));
+        bvid = bvid.substring(7, bvid.length)
+        // console.log(bvid)
+        return this.vidNoCheck(bvid);
       }
     } catch (error) {
       console.log(`Not a valid address, verify whether bvid`);
@@ -84,7 +84,7 @@ export class bili_helper {
         throw new Error(`HTTP Error! Status: ${response.status}`);
       }
       const data: JSON = await response.json();
-      let newData = JSON.parse(JSON.stringify(data, this.replacer, 2));
+      let newData = JSON.parse(JSON.stringify(data, this.replacer, 2))
       return Promise.resolve(newData);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -111,7 +111,7 @@ export class bili_helper {
         duration: value.duration,
         name: value.owner.name,
         view: value.stat.view,
-        danmuku: value.stat.danmuku,
+        danmaku: value.stat.danmaku,
         reply: value.stat.reply,
         favorite: value.stat.favorite,
         coin: value.stat.coin,
@@ -142,3 +142,27 @@ export class bili_helper {
 }
 
 /* basic function of getting json from api, filter and video number check */
+
+export class dateAndTime{
+  /**
+   * toDate
+   */
+  public static toDate(unixTime:number):string {
+    const milisec = unixTime * 1000
+    const date: Date = new Date(milisec)
+    return date.toLocaleString()
+  }
+
+  /**
+   * toTime
+   */
+  public static toTime(unixTime:number):string {
+    const hour = Math.floor(unixTime / 3600)
+    const formattedHour = Time.toDigits(hour, 2)
+    const minute = Math.floor((unixTime - hour * 3600) / 60)
+    const formattedMinute = Time.toDigits(minute, 2)
+    const sec = (unixTime - minute * 60 - hour * 3600)
+    const formattedSec = Time.toDigits(sec, 2)
+    return `${formattedHour}:${formattedMinute}:${formattedSec}`
+  }
+}

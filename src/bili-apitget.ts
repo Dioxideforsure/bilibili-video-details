@@ -50,7 +50,11 @@ export class bili_helper {
    * api
    */
   public async api(): Promise<video_access> {
-    let bili_filled: video_access = await this.fetchData(bili_helper.verifyURL(this.index)) as unknown as video_access
+    let url = bili_helper.verifyURL(this.index)
+    if (url === null){
+      return Promise.reject("Not a valid address")
+    }
+    let bili_filled: video_access = await this.fetchData(url) as unknown as video_access
     return bili_filled
   }
 
@@ -66,7 +70,7 @@ export class bili_helper {
         return this.vidNoCheck(bvid);
       }
     } catch (error) {
-      new Logger('bili_helper').info("Not a valid address, verify whether bvid");
+      //new Logger('bili_helper').info("Not a valid address, verify whether bvid");
       return this.vidNoCheck(urlIf);
     }
     return this.vidNoCheck(urlIf);
@@ -136,7 +140,8 @@ export class bili_helper {
       let api_av: string = api.concat("aid=").concat(num);
       return api_av;
     } else {
-      new Logger('bili_helper').error("You should put avid and bvid")
+      //new Logger('bili_helper').error("You should put avid and bvid")
+      return null;
     }
   }
 

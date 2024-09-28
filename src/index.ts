@@ -48,7 +48,7 @@ export function apply(ctx: Context, con: Config) {
             session.send(toString(video_api, con));
           };
         }
-      });
+      }).catch((reason) => {/*Do nothing*/});
     });
   }
 

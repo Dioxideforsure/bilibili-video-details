@@ -1,0 +1,30 @@
+mainSwitch:
+  $description: 插件总开关
+
+outputFormat:
+  switchTitle:
+    $description: 是否输出视频标题
+
+  switchName:
+    $description: 是否输出作者名称
+  
+  switchType:
+    $description: 是否输出视频类型
+
+  switchPubdate:
+    $description: 是否输出发布日期
+
+  switchDuration:
+    $description: 是否输出视频时长
+
+  switchLink:
+    $description: 是否输出视频链接
+
+  switchStatus:
+    $description: 是否输出视频状态（播放、点赞、收藏）
+
+  switchDesc:
+    $description: 是否输出视频简介
+
+  switchCover:
+    $description: 是否输出视频封面

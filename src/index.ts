@@ -3,21 +3,26 @@ import { video_access, bili_helper, dateAndTime } from './bili-apitget'
 
 export const name = 'bilibili-video-details'
 
-export interface Config {}
+  export interface Config {
+    switch:boolean
+  }
 
-export const Config: Schema<Config> = Schema.object({})
+  export const Config: Schema<Config> = Schema.object({
+    switch: Schema.boolean().default(true).description("A switch that switches the plugin.")
+  });
 
-export function apply(ctx: Context) {
-  ctx.on("message", (session) => {
+export function apply(ctx: Context, con: Config) {
+  if (con.switch){
+    ctx.on("message", (session) => {
     let video = new bili_helper(session.content);
     video.api().then((video_api) => {
       if (video_api !== undefined && video_api.code === 0) {
-        session.send(
-          toString(video_api) + h.image(video_api.data.pic)
-        );
+        session.send(toString(video_api) + h.image(video_api.data.pic));
       }
     });
   });
+}
+
 } 
   
 
